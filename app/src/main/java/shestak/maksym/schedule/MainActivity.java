@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     RecyclerView rv;
+    @Bind(R.id.relativeLayout) RelativeLayout rl;
     SharedPreferences sharedPreferences;
 
     private ArrayList<String> GROUPS;
@@ -64,8 +66,15 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                /*
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                        */
+                if(rl.getVisibility() == View.VISIBLE)
+                    rl.setVisibility(View.GONE);
+                else
+                    rl.setVisibility(View.VISIBLE);
             }
         });
 
@@ -153,8 +162,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void search(View v) {
         String g = group.getText().toString();
+        String t = teacher.getText().toString();
+        String a = auditorium.getText().toString();
+        String beg = begDateText.getText().toString();
+        String end = endDateText.getText().toString();
 
-        Log.d("max", "search btn: " + g);
+
+
+        Log.d("max", "search btn: " + g + " " + t + " " + a);
     }
 
 

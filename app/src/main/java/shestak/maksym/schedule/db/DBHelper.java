@@ -1,5 +1,6 @@
 package shestak.maksym.schedule.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,7 +9,9 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import shestak.maksym.schedule.db.dao.ClassDao;
 import shestak.maksym.schedule.src.max.*;
 import shestak.maksym.schedule.src.max.Class;
 
@@ -78,8 +81,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //TODO loadSchedule
-    public ArrayList<shestak.maksym.schedule.src.max.Class> getSchedule() {
-        ArrayList<Class> classes = new ArrayList<>();
+    public ArrayList<ClassDao> getSchedule() {
+        ArrayList<ClassDao> classes = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.query("classes", null, null, null, null, null, null);
@@ -95,7 +98,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 curDate = c.getString(c.getColumnIndex("day"));
                 prevDate = curDate;
             }
-            classes.add(new Class(
+            classes.add(new ClassDao(
                     c.getString(c.getColumnIndex("title")),
                     c.getString(c.getColumnIndex("type")),
                     c.getString(c.getColumnIndex("auditorium")),
@@ -108,8 +111,67 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return classes;
     }
-
-    public void writeSchedule() {
+    public void writeSchedule(ArrayList<Day> days) {
         SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        List<Class> classes;
+
+        db.beginTransaction();
+        for(Day d : days) {
+            classes = d.classes;
+            for(shestak.maksym.schedule.src.max.Class c : classes) {
+                cv.clear();
+                cv.put("title", c.title);
+                cv.put("type", c.type);
+                cv.put("auditorium", c.auditorium);
+                cv.put("lecturer", c.lecturer);
+                cv.put("groupn", c.group);
+                cv.put("classn", c.classN);
+                cv.put("day", d.data);
+                db.insert("classes", null, cv);
+            }
+        }
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        db.close();;
+    }
+    public String getGroupId(String group) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                "groups",
+                null,
+                "name = ?",
+                new String[] {group},
+                null,
+                null,
+                null);
+        cursor.moveToFirst();
+        return cursor.getString(cursor.getColumnIndex("num"));
+    }
+    public String getAuditoriumId(String auditorium) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                "auditoriums",
+                null,
+                "name = ?",
+                new String[] {auditorium},
+                null,
+                null,
+                null);
+        cursor.moveToFirst();
+        return cursor.getString(cursor.getColumnIndex("num"));
+    }
+    public String getTeacherId(String teacher) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                "teachers",
+                null,
+                "name = ?",
+                new String[] {teacher},
+                null,
+                null,
+                null);
+        cursor.moveToFirst();
+        return cursor.getString(cursor.getColumnIndex("num"));
     }
 }

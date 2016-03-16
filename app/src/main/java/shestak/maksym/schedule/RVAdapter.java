@@ -9,12 +9,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import shestak.maksym.schedule.db.dao.ClassDao;
 import shestak.maksym.schedule.src.max.Class;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ClassViewHolder> {
-    List<shestak.maksym.schedule.src.max.Class> classes;
+    List<ClassDao> classes;
 
-    public RVAdapter(List<Class> classes) {
+    public RVAdapter(List<ClassDao> classes) {
         this.classes = classes;
     }
 

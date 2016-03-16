@@ -90,21 +90,21 @@ public class Schedule {
 						lecturer = tmp.get(3).text();
 						group = tmp.get(4).text();
 						//todo "" in classes
-						day.classes.add(new Class(title, type, auditorium, lecturer, group, String.valueOf(j+1), ""));
+						day.classes.add(new Class(title, type, auditorium, lecturer, group, String.valueOf(j+1)));
 					} else
 					if(tmp.size() == 3) { // Фізичне виховання
 						title = tmp.get(0).text();
 						group = tmp.get(1).text();
-						day.classes.add(new Class(title, "", "", "", group, String.valueOf(j+1), ""));
+						day.classes.add(new Class(title, "", "", "", group, String.valueOf(j+1)));
 					} else if(tmp.size() == 4) { // дисципліна за вибором
 						title = tmp.get(0).text();
 						type = tmp.get(1).text();
 						group = tmp.get(2).text();
-						day.classes.add(new Class(title, type, "", "", group, String.valueOf(j+1), ""));
+						day.classes.add(new Class(title, type, "", "", group, String.valueOf(j+1)));
 					} else if(tmp.size() == 2) { // самостійна робота
 						title = tmp.get(0).text();
 						group = tmp.get(1).text();
-						day.classes.add(new Class(title, "", "", "", group, String.valueOf(j+1), ""));
+						day.classes.add(new Class(title, "", "", "", group, String.valueOf(j+1)));
 					}
 				}
 				if(e1.size() > 0)

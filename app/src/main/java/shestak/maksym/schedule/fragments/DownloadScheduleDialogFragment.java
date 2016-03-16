@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shestak.maksym.schedule.*;
+import shestak.maksym.schedule.db.dao.ClassDao;
 import shestak.maksym.schedule.src.max.Class;
 import shestak.maksym.schedule.db.DBHelper;
 import shestak.maksym.schedule.src.max.Day;
@@ -63,57 +64,17 @@ public class DownloadScheduleDialogFragment extends DialogFragment {
             SQLiteDatabase db = dbh.getWritableDatabase();
 
             dbh.deleteSchedule(db);
-            Cursor cursor = db.query(
-                    "groups",
-                    null,
-                    "name = ?",
-                    new String[] {params[0]},
-                    null,
-                    null,
-                    null);
-            cursor.moveToFirst();
-            Log.d("max", "GROUP: " + params[0]);
 
-            String groupId = cursor.getString(cursor.getColumnIndex("num"));
-
+            String groupId = dbh.getGroupId(params[0]);
             ArrayList<Day> days = Schedule.loadSchedule(groupId, "16.03.2016", "20.03.2016");
-            //Log.d("max", "days size" + String.valueOf(days.size()));
-
-
-
-            List<shestak.maksym.schedule.src.max.Class> classes;
-            ContentValues cv = new ContentValues();
-            long n = -1;
-            db.beginTransaction();
-            for(Day d : days) {
-                //Log.d("max", d.data);
-                classes = d.classes;
-                for(shestak.maksym.schedule.src.max.Class c : classes) {
-                    //Log.d("max", c.toString());
-                    cv.clear();
-                    cv.put("title", c.title);
-                    cv.put("type", c.type);
-                    cv.put("auditorium", c.auditorium);
-                    cv.put("lecturer", c.lecturer);
-                    cv.put("groupn", c.group);
-                    cv.put("classn", c.classN);
-                    cv.put("day", d.data);
-                    n = db.insert("classes", null, cv);
-                }
-            }
-            //Log.d("max", "classes in DB: " + String.valueOf(n));
-            db.setTransactionSuccessful();
-            db.endTransaction();
+            dbh.writeSchedule(days);
 
             dbh.close();
-
-            //TODO check this !!!!!
-
             return null;
         }
         @Override
         protected void onPostExecute(Void aVoid) {
-            ArrayList<Class> classes = new DBHelper(getActivity().getApplicationContext()).getSchedule();
+            ArrayList<ClassDao> classes = new DBHelper(getActivity().getApplicationContext()).getSchedule();
             RecyclerView rv = (RecyclerView) getActivity().findViewById(R.id.rv);
 
             rv.setHasFixedSize(true);

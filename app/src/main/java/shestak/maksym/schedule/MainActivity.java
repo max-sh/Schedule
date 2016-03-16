@@ -1,33 +1,23 @@
 package shestak.maksym.schedule;
 
-import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,7 +25,7 @@ import shestak.maksym.schedule.db.DBHelper;
 import shestak.maksym.schedule.fragments.DatePickerFragment;
 import shestak.maksym.schedule.fragments.DownloadScheduleDialogFragment;
 import shestak.maksym.schedule.fragments.MyDownloaderDialogFragment;
-import shestak.maksym.schedule.src.max.Data;
+import shestak.maksym.schedule.src.max.Class;
 
 public class MainActivity extends AppCompatActivity {
     @Bind(R.id.groupAutocomplete) AutoCompleteTextView group;
@@ -53,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> TEACHERS;
     private ArrayList<String> AUDITORIUMS;
 
-    List<Class> classes;
+    List<shestak.maksym.schedule.src.max.Class> classes;
 
 
     @Override
@@ -119,16 +109,6 @@ public class MainActivity extends AppCompatActivity {
 */
     }
 
-    private void initializeData() {
-        classes = new ArrayList<>();
-        classes.add(new Class("Комп'ютерна графіка", "практична робота",
-                "Г1310", "Баранова Ірина Володимирівна", "ІТ-41", "09:50-11:10", "2-га пара", "05.03.2016 Субота"));
-        classes.add(new Class("Комп'ютерні мережі", "лекція",
-                "Г1305", "Гайдабрус Богдан Володимирович", "ІТ-41", "09:50-11:10", "2-га пара", ""));
-        classes.add(new Class("Політологія", "практична робота",
-                "Г710", "Панченко Юлія Валеріївна", "ІТ-41", "09:50-11:10", "2-га пара", ""));
-
-    }
     private void initializeAutocomplete() {
 
         GROUPS = new ArrayList<>();

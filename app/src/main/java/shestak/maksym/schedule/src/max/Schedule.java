@@ -19,7 +19,7 @@ import shestak.maksym.schedule.src.max.Day;
 
 public class Schedule {
 
-	public static List<Day> loadSchedule(String group1, String begiDate, String endDate) {
+	public static ArrayList<Day> loadSchedule(String group1, String begiDate, String endDate) {
 		String urlParameters =
 						"data%5BDATE_BEG%5D=" +     begiDate
 				+       "&data%5BDATE_END%5D=" +    endDate
@@ -63,7 +63,7 @@ public class Schedule {
 			String lecturer;
 			String group;
 			String date;
-			List<Day> days = new ArrayList<>();
+			ArrayList<Day> days = new ArrayList<>();
 			Day day = null;
 			int size = elements.size();
 			String prevDate = "";
@@ -89,21 +89,22 @@ public class Schedule {
 						auditorium = tmp.get(2).text();
 						lecturer = tmp.get(3).text();
 						group = tmp.get(4).text();
-						day.classes.add(new Class(title, type, auditorium, lecturer, group, String.valueOf(j+1)));
+						//todo "" in classes
+						day.classes.add(new Class(title, type, auditorium, lecturer, group, String.valueOf(j+1), ""));
 					} else
 					if(tmp.size() == 3) { // Фізичне виховання
 						title = tmp.get(0).text();
 						group = tmp.get(1).text();
-						day.classes.add(new Class(title, "", "", "", group, String.valueOf(j+1)));
+						day.classes.add(new Class(title, "", "", "", group, String.valueOf(j+1), ""));
 					} else if(tmp.size() == 4) { // дисципліна за вибором
 						title = tmp.get(0).text();
 						type = tmp.get(1).text();
 						group = tmp.get(2).text();
-						day.classes.add(new Class(title, type, "", "", group, String.valueOf(j+1)));
+						day.classes.add(new Class(title, type, "", "", group, String.valueOf(j+1), ""));
 					} else if(tmp.size() == 2) { // самостійна робота
 						title = tmp.get(0).text();
 						group = tmp.get(1).text();
-						day.classes.add(new Class(title, "", "", "", group, String.valueOf(j+1)));
+						day.classes.add(new Class(title, "", "", "", group, String.valueOf(j+1), ""));
 					}
 				}
 				if(e1.size() > 0)

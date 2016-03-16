@@ -15,11 +15,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import shestak.maksym.schedule.*;
-import shestak.maksym.schedule.Class;
+import shestak.maksym.schedule.src.max.Class;
 import shestak.maksym.schedule.db.DBHelper;
 import shestak.maksym.schedule.src.max.Day;
 import shestak.maksym.schedule.src.max.Schedule;
@@ -77,7 +76,7 @@ public class DownloadScheduleDialogFragment extends DialogFragment {
 
             String groupId = cursor.getString(cursor.getColumnIndex("num"));
 
-            List<Day> days = Schedule.loadSchedule(groupId, "16.03.2016", "20.03.2016");
+            ArrayList<Day> days = Schedule.loadSchedule(groupId, "16.03.2016", "20.03.2016");
             //Log.d("max", "days size" + String.valueOf(days.size()));
 
 
@@ -114,50 +113,14 @@ public class DownloadScheduleDialogFragment extends DialogFragment {
         }
         @Override
         protected void onPostExecute(Void aVoid) {
-
-            ArrayList<Class> classes = new ArrayList<>();
+            ArrayList<Class> classes = new DBHelper(getActivity().getApplicationContext()).getSchedule();
             RecyclerView rv = (RecyclerView) getActivity().findViewById(R.id.rv);
 
-            DBHelper dbh = new DBHelper(getActivity().getApplicationContext());
-            SQLiteDatabase db = dbh.getReadableDatabase();
-
-            Cursor c = db.query("classes", null, null, null, null, null, null);
-            String prevDate = "";
-            String curDate;
-            while(c.moveToNext()) {
-
-                if(c.getString(c.getColumnIndex("day")).compareTo(prevDate) == 0)
-                    curDate = "";
-                else {
-                    curDate = c.getString(c.getColumnIndex("day"));
-                    prevDate = curDate;
-                }
-
-                classes.add(new Class(
-                        c.getString(c.getColumnIndex("title")),
-                        c.getString(c.getColumnIndex("type")),
-                        c.getString(c.getColumnIndex("auditorium")),
-                        c.getString(c.getColumnIndex("lecturer")),
-                        c.getString(c.getColumnIndex("groupn")),
-                        "time",
-                        c.getString(c.getColumnIndex("classn")),
-                        curDate));
-                //Log.d("max", "+" + c.getString(c.getColumnIndex("auditorium")) + "+");
-
-            }
-            //Log.d("max", "cursor: " + String.valueOf(c.getCount()));
-            c.close();
-            //Log.d("max", "classes" + String.valueOf(classes.size()));
-
-
-            rv = (RecyclerView) getActivity().findViewById(R.id.rv);
             rv.setHasFixedSize(true);
             LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
             rv.setLayoutManager(llm);
-
             RVAdapter adapter = new RVAdapter(classes);
             rv.setAdapter(adapter);
-
 
             dismiss();
             super.onPostExecute(aVoid);

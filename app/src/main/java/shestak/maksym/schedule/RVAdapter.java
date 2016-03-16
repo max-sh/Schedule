@@ -2,7 +2,6 @@ package shestak.maksym.schedule;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import shestak.maksym.schedule.src.max.Class;
+
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ClassViewHolder> {
-    List<Class> classes;
+    List<shestak.maksym.schedule.src.max.Class> classes;
 
     public RVAdapter(List<Class> classes) {
         this.classes = classes;
@@ -33,7 +34,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ClassViewHolder> {
     @Override
     public void onBindViewHolder(ClassViewHolder holder, int position) {
         //Log.d("max", "onBindViewHolder");
-        holder.time.setText(classes.get(position).time);
+        //todo time
+        //holder.time.setText(classes.get(position).time);
         holder.classN.setText(classes.get(position).classN);
         holder.title.setText(classes.get(position).title);
 

@@ -33,6 +33,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import shestak.maksym.schedule.db.DBHelper;
 import shestak.maksym.schedule.fragments.DatePickerFragment;
+import shestak.maksym.schedule.fragments.DownloadScheduleDialogFragment;
 import shestak.maksym.schedule.fragments.MyDownloaderDialogFragment;
 import shestak.maksym.schedule.src.max.Data;
 
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                         */
-                if(rl.getVisibility() == View.VISIBLE)
+                if (rl.getVisibility() == View.VISIBLE)
                     rl.setVisibility(View.GONE);
                 else
                     rl.setVisibility(View.VISIBLE);
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ButterKnife.bind(this);
-
+/*
         sharedPreferences = getPreferences(MODE_PRIVATE);
         if(sharedPreferences.getString("first", "").isEmpty()) {
             Log.d("max", "FIRST LAUNCH" + sharedPreferences.getString("first", ""));
@@ -87,10 +88,18 @@ public class MainActivity extends AppCompatActivity {
             fragment.show(getFragmentManager(), "dialogfrag");
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("first", "n");
-            editor.commit();
+            editor.apply();
+
+            initializeAutocomplete();
+            group.setAdapter(new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, GROUPS.toArray()));
+            teacher.setAdapter(new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, TEACHERS.toArray()));
+            auditorium.setAdapter(new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, AUDITORIUMS.toArray()));
+
         }
         Log.d("max", "FIRST LAUNCH?-" + sharedPreferences.getString("first", ""));
-
+*/
+        MyDownloaderDialogFragment fragment = new MyDownloaderDialogFragment();
+        fragment.show(getFragmentManager(), "dialogfrag");
 
         initializeAutocomplete();
         group.setAdapter(new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, GROUPS.toArray()));
@@ -98,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         auditorium.setAdapter(new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, AUDITORIUMS.toArray()));
 
 
-
+/*
         rv = (RecyclerView)findViewById(R.id.rv);
         rv.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
@@ -107,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         initializeData();
         RVAdapter adapter = new RVAdapter(classes);
         rv.setAdapter(adapter);
-
+*/
     }
 
     private void initializeData() {
@@ -161,15 +170,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void search(View v) {
-        String g = group.getText().toString();
-        String t = teacher.getText().toString();
-        String a = auditorium.getText().toString();
-        String beg = begDateText.getText().toString();
-        String end = endDateText.getText().toString();
+
+        //TODO validation
+
+        DownloadScheduleDialogFragment fragment = new DownloadScheduleDialogFragment();
+        fragment.show(getFragmentManager(), "dScheduleFragment");
 
 
-
-        Log.d("max", "search btn: " + g + " " + t + " " + a);
     }
 
 

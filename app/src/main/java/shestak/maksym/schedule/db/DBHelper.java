@@ -3,6 +3,7 @@ package shestak.maksym.schedule.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -17,7 +18,6 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-
         db.execSQL("create table groups ("
                 + "id integer primary key autoincrement,"
                 + "num text,"
@@ -31,6 +31,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 + "id integer primary key autoincrement,"
                 + "num text,"
                 + "name text" + ");");
+        db.execSQL("create table classes ("
+                + "id integer primary key autoincrement,"
+                + "day text,"
+                + "title text,"
+                + "type text,"
+                + "auditorium text,"
+                + "lecturer text,"
+                + "groupn text,"
+                + "classn text" + ");");
 
     }
 
@@ -39,6 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists groups");
         db.execSQL("drop table if exists auditoriums");
         db.execSQL("drop table if exists teachers");
+        db.execSQL("drop table if exists classes");
         onCreate(db);
     }
 
@@ -46,6 +56,24 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists groups");
         db.execSQL("drop table if exists auditoriums");
         db.execSQL("drop table if exists teachers");
+        db.execSQL("drop table if exists classes");
         onCreate(db);
+    }
+    public void deleteSchedule(SQLiteDatabase db) {
+        db.execSQL("drop table if exists classes");
+        db.execSQL("create table classes ("
+                + "id integer primary key autoincrement,"
+                + "day text,"
+                + "title text,"
+                + "type text,"
+                + "auditorium text,"
+                + "lecturer text,"
+                + "groupn text,"
+                + "classn text" + ");");
+    }
+
+    //TODO loadSchedule
+    public void loadSchedule() {
+
     }
 }

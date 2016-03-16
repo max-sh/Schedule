@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Day {
-	String data;
-	List<Class> classes;
+	public String data;
+	public List<Class> classes;
 
 	@Override
 	public String toString() {

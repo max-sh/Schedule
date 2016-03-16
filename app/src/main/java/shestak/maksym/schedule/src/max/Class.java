@@ -1,12 +1,12 @@
 package shestak.maksym.schedule.src.max;
 
 public class Class {
-	String title;
-	String type;
-	String auditorium;
-	String lecturer;
-	String group;
-	String classN;
+	public String title;
+	public String type;
+	public String auditorium;
+	public String lecturer;
+	public String group;
+	public String classN;
 
 	public Class(String title, String type, String auditorium, String lecturer, String group, String classN) {
 		this.title = title;

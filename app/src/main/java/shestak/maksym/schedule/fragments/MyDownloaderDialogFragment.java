@@ -47,7 +47,7 @@ public class MyDownloaderDialogFragment extends android.app.DialogFragment {
         downloadFromURL.execute();
 
 
-        Log.d("max", "onCreateDialog " + Data.GROUPS.get("ІТ-41"));
+        //Log.d("max", "onCreateDialog " + Data.GROUPS.get("ІТ-41"));
 
         return dialog;
     }
@@ -74,8 +74,6 @@ public class MyDownloaderDialogFragment extends android.app.DialogFragment {
 
             ContentValues cv = new ContentValues();
             List<String> keys = new ArrayList<>(Data.GROUPS.keySet());
-
-
 
 
             db.beginTransaction();

@@ -101,6 +101,15 @@
             android:layout_alignRight="@+id/teacherAutocomplete"
             android:layout_alignEnd="@+id/teacherAutocomplete"
             android:hint="auditorium" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="check"
+            android:id="@+id/button2"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

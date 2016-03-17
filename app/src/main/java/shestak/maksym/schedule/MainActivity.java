@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         String endDate = df.format(c.getTime());
         endDateText.setText(endDate);
 
-
+        //todo show loaded schedule
     }
 
     private void initializeAutocomplete() {
@@ -159,8 +159,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void search(View v) {
         //TODO validation
-        DownloadScheduleDialogFragment fragment = new DownloadScheduleDialogFragment();
-        fragment.show(getFragmentManager(), "dScheduleFragment");
+        DBHelper dbHelper = new DBHelper(getApplicationContext());
+
+        String groupText = group.getText().toString();
+        String auditoriumText = auditorium.getText().toString();
+        String teacherText = teacher.getText().toString();
+
+        if(dbHelper.checkGroup(groupText) && dbHelper.checkTeacher(teacherText) &&
+                dbHelper.checkAuditorium(auditoriumText)) {
+            DownloadScheduleDialogFragment fragment = new DownloadScheduleDialogFragment();
+            fragment.show(getFragmentManager(), "dScheduleFragment");
+        }
+
+
     }
 
 

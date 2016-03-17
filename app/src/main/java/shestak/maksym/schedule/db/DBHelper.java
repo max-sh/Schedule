@@ -133,6 +133,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.endTransaction();
         db.close();;
     }
+
     public String getGroupId(String group) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
@@ -184,5 +185,48 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         else
             return false;
+    }
+
+    public boolean checkGroup(String group) {
+        if(group.isEmpty()) return true;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                "groups",
+                null,
+                "name = ?",
+                new String[] {group},
+                null,
+                null,
+                null);
+        if(cursor.getCount() > 0) return true;
+        return false;
+    }
+    public boolean checkTeacher(String teacher) {
+        if(teacher.isEmpty()) return true;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                "teachers",
+                null,
+                "name = ?",
+                new String[] {teacher},
+                null,
+                null,
+                null);
+        if(cursor.getCount() > 0) return true;
+        return false;
+    }
+    public boolean checkAuditorium(String auditorium) {
+        if(auditorium.isEmpty()) return true;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                "auditoriums",
+                null,
+                "name = ?",
+                new String[] {auditorium},
+                null,
+                null,
+                null);
+        if(cursor.getCount() > 0) return true;
+        return false;
     }
 }

@@ -26,7 +26,7 @@ import shestak.maksym.schedule.src.max.Schedule;
 
 public class DownloadScheduleDialogFragment extends DialogFragment {
     ProgressDialog dialog;
-
+    private static final String TAG = "max";
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         dialog = new ProgressDialog(getActivity(), getTheme());
@@ -49,9 +49,8 @@ public class DownloadScheduleDialogFragment extends DialogFragment {
                 .findViewById(R.id.teacherAutocomplete)).getText().toString();
 
 
-
         //Log.d("max", "GROUP:::: " + group);
-        new DownloadSchedule().execute(group);
+        new DownloadSchedule().execute(group, teacher, auditorium, beg, end);
 
         return dialog;
     }
@@ -62,16 +61,33 @@ public class DownloadScheduleDialogFragment extends DialogFragment {
         protected Void doInBackground(String... params) {
             DBHelper dbh = new DBHelper(getActivity().getApplicationContext());
             SQLiteDatabase db = dbh.getWritableDatabase();
-
             dbh.deleteSchedule(db);
 
-            String groupId = dbh.getGroupId(params[0]);
-            ArrayList<Day> days = Schedule.loadSchedule(groupId, "0", "0", "16.03.2016", "20.03.2016");
-            dbh.writeSchedule(days);
+            String groupId          = params[0];
+            String teacherId        = params[1];
+            String auditoriumId     = params[2];
+            String beg              = params[3];
+            String end              = params[4];
 
+            if(groupId.isEmpty()) groupId = "0";
+            else groupId = dbh.getGroupId(groupId);
+            if(teacherId.isEmpty()) teacherId = "0";
+            else teacherId = dbh.getTeacherId(teacherId);
+            if(auditoriumId.isEmpty()) auditoriumId = "0";
+            else auditoriumId = dbh.getAuditoriumId(auditoriumId);
+
+
+
+            Log.d(TAG, getClass().getSimpleName() + ": " + groupId + teacherId + auditoriumId);
+
+            ArrayList<Day> days = Schedule.loadSchedule(groupId, teacherId, auditoriumId,
+                    beg, end);
+
+            dbh.writeSchedule(days);
             dbh.close();
             return null;
         }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             ArrayList<ClassDao> classes = new DBHelper(getActivity().getApplicationContext()).getSchedule();

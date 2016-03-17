@@ -22,7 +22,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Load"
+            android:text="Завантажити"
             android:id="@+id/button"
             android:layout_below="@+id/auditoriumAutocomplete"
             android:layout_alignParentLeft="true"
@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="begin date"
+            android:text="Дата початку"
             android:id="@+id/textView"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -43,7 +43,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="end date"
+            android:text="Дата закінчення"
             android:id="@+id/textView2"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -57,8 +57,7 @@
             android:id="@+id/begDateText"
             android:layout_below="@+id/textView"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:onClick="showDatePickerDialog" />
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,15 +67,14 @@
             android:id="@+id/endDateText"
             android:layout_alignTop="@+id/begDateText"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:onClick="showDatePickerDialog" />
+            android:layout_alignParentEnd="true" />
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
             android:id="@+id/groupAutocomplete"
-            android:hint="group"
+            android:hint="Група"
             android:layout_below="@+id/begDateText"
             android:layout_alignParentLeft="true" />
 
@@ -89,7 +87,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignRight="@+id/groupAutocomplete"
             android:layout_alignEnd="@+id/groupAutocomplete"
-            android:hint="lecturer" />
+            android:hint="Викладач" />
 
         <AutoCompleteTextView
             android:layout_width="wrap_content"
@@ -100,15 +98,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignRight="@+id/teacherAutocomplete"
             android:layout_alignEnd="@+id/teacherAutocomplete"
-            android:hint="auditorium" />
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="check"
-            android:id="@+id/button2"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:hint="Аудиторія" />
 
     </RelativeLayout>
 

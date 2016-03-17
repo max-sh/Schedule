@@ -19,13 +19,13 @@ import shestak.maksym.schedule.src.max.Day;
 
 public class Schedule {
 
-	public static ArrayList<Day> loadSchedule(String group1, String begiDate, String endDate) {
+	public static ArrayList<Day> loadSchedule(String group1, String teacher, String aud, String begiDate, String endDate) {
 		String urlParameters =
 						"data%5BDATE_BEG%5D=" +     begiDate
 				+       "&data%5BDATE_END%5D=" +    endDate
 				+       "&data%5BKOD_GROUP%5D=" +   group1
-				+       "&data%5BID_FIO%5D=" +      "0"
-				+       "&data%5BID_AUD%5D=" +      "0"
+				+       "&data%5BID_FIO%5D=" +      teacher
+				+       "&data%5BID_AUD%5D=" +      aud
 				+       "&data%5BPUB_DATE%5D=" +    "false"
 				+       "&data%5BPARAM%5D=" +       "0";
 

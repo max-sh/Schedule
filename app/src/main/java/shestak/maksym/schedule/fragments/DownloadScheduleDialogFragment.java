@@ -66,7 +66,7 @@ public class DownloadScheduleDialogFragment extends DialogFragment {
             dbh.deleteSchedule(db);
 
             String groupId = dbh.getGroupId(params[0]);
-            ArrayList<Day> days = Schedule.loadSchedule(groupId, "16.03.2016", "20.03.2016");
+            ArrayList<Day> days = Schedule.loadSchedule(groupId, "0", "0", "16.03.2016", "20.03.2016");
             dbh.writeSchedule(days);
 
             dbh.close();

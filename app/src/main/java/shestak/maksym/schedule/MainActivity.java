@@ -17,7 +17,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> AUDITORIUMS;
 
     List<shestak.maksym.schedule.src.max.Class> classes;
-
+    private static final String TAG = "max";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,25 +90,31 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.d("max", "FIRST LAUNCH?-" + sharedPreferences.getString("first", ""));
 */
-        MyDownloaderDialogFragment fragment = new MyDownloaderDialogFragment();
-        fragment.show(getFragmentManager(), "dialogfrag");
+        DBHelper dbHelper = new DBHelper(getApplicationContext());
+        if(!dbHelper.isSearchDataLoaded()) {
+            Log.d(TAG, getClass().getSimpleName() + ": " + "Downloaded data");
+            MyDownloaderDialogFragment fragment = new MyDownloaderDialogFragment();
+            fragment.show(getFragmentManager(), "dialogfrag");
+        } else {
+            Log.d(TAG, getClass().getSimpleName() + ": " + "All data already loaded");
+        }
+
 
         initializeAutocomplete();
         group.setAdapter(new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, GROUPS.toArray()));
         teacher.setAdapter(new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, TEACHERS.toArray()));
         auditorium.setAdapter(new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, AUDITORIUMS.toArray()));
 
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        String formattedDate = df.format(c.getTime());
+        begDateText.setText(formattedDate);
 
-/*
-        rv = (RecyclerView)findViewById(R.id.rv);
-        rv.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
-        rv.setLayoutManager(llm);
+        c.add(Calendar.DATE, 10);
+        String endDate = df.format(c.getTime());
+        endDateText.setText(endDate);
 
-        initializeData();
-        RVAdapter adapter = new RVAdapter(classes);
-        rv.setAdapter(adapter);
-*/
+
     }
 
     private void initializeAutocomplete() {
@@ -150,13 +158,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void search(View v) {
-
         //TODO validation
-
         DownloadScheduleDialogFragment fragment = new DownloadScheduleDialogFragment();
         fragment.show(getFragmentManager(), "dScheduleFragment");
-
-
     }
 
 

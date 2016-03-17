@@ -18,9 +18,7 @@ import shestak.maksym.schedule.src.max.Class;
 public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {
-        // конструктор суперкласса
         super(context, "myDB", null, 1);
-
     }
 
     @Override
@@ -173,5 +171,18 @@ public class DBHelper extends SQLiteOpenHelper {
                 null);
         cursor.moveToFirst();
         return cursor.getString(cursor.getColumnIndex("num"));
+    }
+    public boolean isSearchDataLoaded() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String count = "SELECT count(*) FROM groups";
+        Cursor mcursor = db.rawQuery(count, null);
+        mcursor.moveToFirst();
+        int icount = mcursor.getInt(0);
+
+        if(icount>0)
+            return true;
+        else
+            return false;
     }
 }

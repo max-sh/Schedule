@@ -15,6 +15,18 @@ import shestak.maksym.schedule.src.max.Class;
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ClassViewHolder> {
     List<ClassDao> classes;
 
+
+    String TIME[] = {
+            "08:15-09:35",
+            "09:50-11:10",
+            "11:25-12:45",
+            "13:25-14:45",
+            "15:00-16:20",
+            "16:35-17:55",
+            "18:00-19:20",
+            "19:25-20:45"
+    };
+
     public RVAdapter(List<ClassDao> classes) {
         this.classes = classes;
     }
@@ -41,6 +53,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ClassViewHolder> {
         holder.title.setText(classes.get(position).title);
 
 
+        holder.time.setText(TIME[Integer.valueOf(classes.get(position).classN) - 1]);
 
         if(!classes.get(position).type.isEmpty()) {
             holder.type.setText(classes.get(position).type);

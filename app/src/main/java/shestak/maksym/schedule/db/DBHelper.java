@@ -17,6 +17,14 @@ import shestak.maksym.schedule.src.max.Class;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+    private static final String TABLE_GROUPS = "groups";
+    private static final String TABLE_AUDITORIUMS = "auditoriums";
+    private static final String TABLE_TEACHERS = "teachers";
+    private static final String TABLE_CLASSES = "classes";
+
+
+
+
     public DBHelper(Context context) {
         super(context, "myDB", null, 1);
     }
@@ -137,20 +145,17 @@ public class DBHelper extends SQLiteOpenHelper {
     public String getGroupId(String group) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
-                "groups",
-                null,
+                TABLE_GROUPS, null,
                 "name = ?",
                 new String[] {group},
-                null,
-                null,
-                null);
+                null, null, null);
         cursor.moveToFirst();
         return cursor.getString(cursor.getColumnIndex("num"));
     }
     public String getAuditoriumId(String auditorium) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
-                "auditoriums",
+                TABLE_AUDITORIUMS,
                 null,
                 "name = ?",
                 new String[] {auditorium},
@@ -163,7 +168,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public String getTeacherId(String teacher) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
-                "teachers",
+                TABLE_TEACHERS,
                 null,
                 "name = ?",
                 new String[] {teacher},
@@ -173,6 +178,41 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         return cursor.getString(cursor.getColumnIndex("num"));
     }
+
+    public boolean checkGroup(String group) {
+        if(group.isEmpty()) return true;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                TABLE_GROUPS, null,
+                "name = ?",
+                new String[] {group},
+                null, null, null);
+        if(cursor.getCount() > 0) return true;
+        return false;
+    }
+    public boolean checkTeacher(String teacher) {
+        if(teacher.isEmpty()) return true;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                TABLE_TEACHERS, null,
+                "name = ?",
+                new String[] {teacher},
+                null, null, null);
+        if(cursor.getCount() > 0) return true;
+        return false;
+    }
+    public boolean checkAuditorium(String auditorium) {
+        if(auditorium.isEmpty()) return true;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                TABLE_AUDITORIUMS, null,
+                "name = ?",
+                new String[] {auditorium},
+                null, null, null);
+        if(cursor.getCount() > 0) return true;
+        return false;
+    }
+
 
     public boolean isSearchDataLoaded() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -187,49 +227,6 @@ public class DBHelper extends SQLiteOpenHelper {
         else
             return false;
     }
-    public boolean checkGroup(String group) {
-        if(group.isEmpty()) return true;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(
-                "groups",
-                null,
-                "name = ?",
-                new String[] {group},
-                null,
-                null,
-                null);
-        if(cursor.getCount() > 0) return true;
-        return false;
-    }
-    public boolean checkTeacher(String teacher) {
-        if(teacher.isEmpty()) return true;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(
-                "teachers",
-                null,
-                "name = ?",
-                new String[] {teacher},
-                null,
-                null,
-                null);
-        if(cursor.getCount() > 0) return true;
-        return false;
-    }
-    public boolean checkAuditorium(String auditorium) {
-        if(auditorium.isEmpty()) return true;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(
-                "auditoriums",
-                null,
-                "name = ?",
-                new String[] {auditorium},
-                null,
-                null,
-                null);
-        if(cursor.getCount() > 0) return true;
-        return false;
-    }
-
     public boolean isScheduleLoaded() {
         SQLiteDatabase db = this.getReadableDatabase();
 

@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         endDateText.setText(endDate);
 
         //todo show loaded schedule
-        if(dbHelper.isSearchDataLoaded()) {
+        if(dbHelper.isScheduleLoaded()) {
             ArrayList<ClassDao> classes = new DBHelper(getApplicationContext()).getSchedule();
             RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
 

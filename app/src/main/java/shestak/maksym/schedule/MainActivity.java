@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -24,6 +25,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import shestak.maksym.schedule.db.DBHelper;
+import shestak.maksym.schedule.db.dao.ClassDao;
 import shestak.maksym.schedule.fragments.DatePickerFragment;
 import shestak.maksym.schedule.fragments.DownloadScheduleDialogFragment;
 import shestak.maksym.schedule.fragments.MyDownloaderDialogFragment;
@@ -109,12 +111,22 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         String formattedDate = df.format(c.getTime());
         begDateText.setText(formattedDate);
-
         c.add(Calendar.DATE, 10);
         String endDate = df.format(c.getTime());
         endDateText.setText(endDate);
 
         //todo show loaded schedule
+        if(dbHelper.isSearchDataLoaded()) {
+            ArrayList<ClassDao> classes = new DBHelper(getApplicationContext()).getSchedule();
+            RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
+
+            rv.setHasFixedSize(true);
+            LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
+            rv.setLayoutManager(llm);
+            RVAdapter adapter = new RVAdapter(classes);
+            rv.setAdapter(adapter);
+        }
+
     }
 
     private void initializeAutocomplete() {
@@ -165,7 +177,12 @@ public class MainActivity extends AppCompatActivity {
         String auditoriumText = auditorium.getText().toString();
         String teacherText = teacher.getText().toString();
 
-        if(dbHelper.checkGroup(groupText) && dbHelper.checkTeacher(teacherText) &&
+        short empty = 0;
+        if(groupText.isEmpty()) empty++;
+        if(auditoriumText.isEmpty()) empty++;
+        if(teacherText.isEmpty()) empty++;
+
+        if(empty != 3 && dbHelper.checkGroup(groupText) && dbHelper.checkTeacher(teacherText) &&
                 dbHelper.checkAuditorium(auditoriumText)) {
             DownloadScheduleDialogFragment fragment = new DownloadScheduleDialogFragment();
             fragment.show(getFragmentManager(), "dScheduleFragment");

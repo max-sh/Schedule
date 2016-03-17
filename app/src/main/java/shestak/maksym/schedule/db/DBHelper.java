@@ -173,6 +173,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         return cursor.getString(cursor.getColumnIndex("num"));
     }
+
     public boolean isSearchDataLoaded() {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -186,7 +187,6 @@ public class DBHelper extends SQLiteOpenHelper {
         else
             return false;
     }
-
     public boolean checkGroup(String group) {
         if(group.isEmpty()) return true;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -228,5 +228,19 @@ public class DBHelper extends SQLiteOpenHelper {
                 null);
         if(cursor.getCount() > 0) return true;
         return false;
+    }
+
+    public boolean isScheduleLoaded() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String count = "SELECT count(*) FROM classes";
+        Cursor mcursor = db.rawQuery(count, null);
+        mcursor.moveToFirst();
+        int icount = mcursor.getInt(0);
+
+        if(icount>0)
+            return true;
+        else
+            return false;
     }
 }

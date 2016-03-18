@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,7 +17,7 @@ import shestak.maksym.schedule.db.DBHelper;
 import shestak.maksym.schedule.src.max.Data;
 
 
-public class MyDownloaderDialogFragment extends android.app.DialogFragment {
+public class MyDownloaderDialogFragment extends AppCompatDialogFragment {
 
     final String LOG_TAG = "max";
 

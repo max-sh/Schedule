@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,7 +25,7 @@ import shestak.maksym.schedule.db.DBHelper;
 import shestak.maksym.schedule.src.max.Day;
 import shestak.maksym.schedule.src.max.Schedule;
 
-public class DownloadScheduleDialogFragment extends DialogFragment {
+public class DownloadScheduleDialogFragment extends AppCompatDialogFragment {
     ProgressDialog dialog;
     private static final String TAG = "max";
     @Override

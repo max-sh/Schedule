@@ -10,9 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import shestak.maksym.schedule.db.DBHelper;
@@ -29,26 +30,21 @@ import shestak.maksym.schedule.db.dao.ClassDao;
 import shestak.maksym.schedule.fragments.DatePickerFragment;
 import shestak.maksym.schedule.fragments.DownloadScheduleDialogFragment;
 import shestak.maksym.schedule.fragments.MyDownloaderDialogFragment;
-import shestak.maksym.schedule.src.max.Class;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "max";
     @Bind(R.id.groupAutocomplete) AutoCompleteTextView group;
     @Bind(R.id.teacherAutocomplete) AutoCompleteTextView teacher;
     @Bind(R.id.auditoriumAutocomplete) AutoCompleteTextView auditorium;
     @Bind(R.id.begDateText) TextView begDateText;
     @Bind(R.id.endDateText) TextView endDateText;
-
-
     RecyclerView rv;
     @Bind(R.id.relativeLayout) RelativeLayout rl;
     SharedPreferences sharedPreferences;
-
+    List<shestak.maksym.schedule.src.max.Class> classes;
     private ArrayList<String> GROUPS;
     private ArrayList<String> TEACHERS;
     private ArrayList<String> AUDITORIUMS;
-
-    List<shestak.maksym.schedule.src.max.Class> classes;
-    private static final String TAG = "max";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         if(!dbHelper.isSearchDataLoaded()) {
             Log.d(TAG, getClass().getSimpleName() + ": " + "Downloaded data");
             MyDownloaderDialogFragment fragment = new MyDownloaderDialogFragment();
-            fragment.show(getFragmentManager(), "dialogfrag");
+            fragment.show(getSupportFragmentManager(), "dialogfrag");
         } else {
             Log.d(TAG, getClass().getSimpleName() + ": " + "All data already loaded");
         }
@@ -120,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<ClassDao> classes = new DBHelper(getApplicationContext()).getSchedule();
             RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
 
+            rl.setVisibility(View.GONE);
             rv.setHasFixedSize(true);
             LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
             rv.setLayoutManager(llm);
@@ -161,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void showDatePickerDialog(View v) {
         DatePickerFragment newFragment = new DatePickerFragment();
-        newFragment.show(getFragmentManager(), "datePicker");
+        newFragment.show(getSupportFragmentManager(), "datePicker");
 
         Bundle args = new Bundle();
         args.putInt("text", v.getId());
@@ -184,8 +181,9 @@ public class MainActivity extends AppCompatActivity {
 
         if(empty != 3 && dbHelper.checkGroup(groupText) && dbHelper.checkTeacher(teacherText) &&
                 dbHelper.checkAuditorium(auditoriumText)) {
+            rl.setVisibility(View.GONE);
             DownloadScheduleDialogFragment fragment = new DownloadScheduleDialogFragment();
-            fragment.show(getFragmentManager(), "dScheduleFragment");
+            fragment.show(getSupportFragmentManager(), "dScheduleFragment");
         }
 
 

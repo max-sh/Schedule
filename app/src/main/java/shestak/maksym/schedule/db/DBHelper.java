@@ -32,58 +32,58 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("create table groups ("
-                + "id integer primary key autoincrement,"
-                + "num text,"
-                + "name text" + ");");
+        db.execSQL("CREATE TABLE groups ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "num TEXT,"
+                + "name TEXT" + ");");
 
-        db.execSQL("create table auditoriums ("
-                + "id integer primary key autoincrement,"
-                + "num text,"
-                + "name text" + ");");
-        db.execSQL("create table teachers ("
-                + "id integer primary key autoincrement,"
-                + "num text,"
-                + "name text" + ");");
-        db.execSQL("create table classes ("
-                + "id integer primary key autoincrement,"
-                + "day text,"
-                + "title text,"
-                + "type text,"
-                + "auditorium text,"
-                + "lecturer text,"
-                + "groupn text,"
-                + "classn text" + ");");
+        db.execSQL("CREATE TABLE auditoriums ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "num TEXT,"
+                + "name TEXT" + ");");
+        db.execSQL("CREATE TABLE teachers ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "num TEXT,"
+                + "name TEXT" + ");");
+        db.execSQL("CREATE TABLE classes ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "day TEXT,"
+                + "title TEXT,"
+                + "type TEXT,"
+                + "auditorium TEXT,"
+                + "lecturer TEXT,"
+                + "groupn TEXT,"
+                + "classn TEXT" + ");");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists groups");
-        db.execSQL("drop table if exists auditoriums");
-        db.execSQL("drop table if exists teachers");
-        db.execSQL("drop table if exists classes");
+        db.execSQL("DROP TABLE IF EXISTS groups");
+        db.execSQL("DROP TABLE IF EXISTS auditoriums");
+        db.execSQL("DROP TABLE IF EXISTS teachers");
+        db.execSQL("DROP TABLE IF EXISTS classes");
         onCreate(db);
     }
 
     public void delete(SQLiteDatabase db) {
-        db.execSQL("drop table if exists groups");
-        db.execSQL("drop table if exists auditoriums");
-        db.execSQL("drop table if exists teachers");
-        db.execSQL("drop table if exists classes");
+        db.execSQL("DROP TABLE IF EXISTS groups");
+        db.execSQL("DROP TABLE IF EXISTS auditoriums");
+        db.execSQL("DROP TABLE IF EXISTS teachers");
+        db.execSQL("DROP TABLE IF EXISTS classes");
         onCreate(db);
     }
     public void deleteSchedule(SQLiteDatabase db) {
-        db.execSQL("drop table if exists classes");
-        db.execSQL("create table classes ("
-                + "id integer primary key autoincrement,"
-                + "day text,"
-                + "title text,"
-                + "type text,"
-                + "auditorium text,"
-                + "lecturer text,"
-                + "groupn text,"
-                + "classn text" + ");");
+        db.execSQL("DROP TABLE IF EXISTS classes");
+        db.execSQL("CREATE TABLE classes ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "day TEXT,"
+                + "title TEXT,"
+                + "type TEXT,"
+                + "auditorium TEXT,"
+                + "lecturer TEXT,"
+                + "groupn TEXT,"
+                + "classn TEXT" + ");");
     }
 
     //TODO loadSchedule
